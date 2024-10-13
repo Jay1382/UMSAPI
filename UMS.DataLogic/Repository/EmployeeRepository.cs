@@ -53,7 +53,7 @@ namespace Project_G2.DataAccessLayer.Repository
                 ResponseModel responseModel = new ResponseModel();
                 try
                 {
-                    var result = await connection.QueryAsync<ReadEmployeeResponse>("employee_read", commandType: CommandType.StoredProcedure);
+                    var result = await connection.QueryAsync<GetEmployeeResponse>("employee_read", commandType: CommandType.StoredProcedure);
                     if (result.Count() > 0)
                     {
                         responseModel.StatusCode = 200;
@@ -85,7 +85,7 @@ namespace Project_G2.DataAccessLayer.Repository
                 {
                     DynamicParameters parameter = new DynamicParameters();
                     parameter.Add("@Id", getEmployeeByIdRequest.Id);
-                    var result = await connection.QueryAsync<ReadEmployeeResponse>("employee_read_id", parameter, commandType: CommandType.StoredProcedure);
+                    var result = await connection.QueryAsync<GetEmployeeResponse>("employee_read_id", parameter, commandType: CommandType.StoredProcedure);
                     if (result.Count() > 0)
                     {
                         responseModel.StatusCode = 200;

@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UMS.API", "UMS.API\UMS.API.csproj", "{6D5CF16C-377E-4026-A9B6-4BFD574AEACC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UMS.API", "UMS.API\UMS.API.csproj", "{6D5CF16C-377E-4026-A9B6-4BFD574AEACC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UMS.Domain", "UMS.Domain\UMS.Domain.csproj", "{229E57F7-D146-4B50-A883-7DC53E35EA5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UMS.Domain", "UMS.Domain\UMS.Domain.csproj", "{229E57F7-D146-4B50-A883-7DC53E35EA5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UMS.DataLogic", "UMS.DataLogic\UMS.DataLogic.csproj", "{D73FA67E-EBB8-4115-8A65-DBDDEC29EC4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UMS.DataLogic", "UMS.DataLogic\UMS.DataLogic.csproj", "{D73FA67E-EBB8-4115-8A65-DBDDEC29EC4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UMS.BusinessLogic", "UMS.BusinessLogic\UMS.BusinessLogic.csproj", "{5C925B12-C581-4C30-BB10-C193A80588A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UMS.BusinessLogic", "UMS.BusinessLogic\UMS.BusinessLogic.csproj", "{5C925B12-C581-4C30-BB10-C193A80588A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UMS.Web", "UMS.Web\UMS.Web.csproj", "{F34F9DD6-FA3E-4C11-BA48-E431B8E5F08A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{5C925B12-C581-4C30-BB10-C193A80588A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C925B12-C581-4C30-BB10-C193A80588A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C925B12-C581-4C30-BB10-C193A80588A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F34F9DD6-FA3E-4C11-BA48-E431B8E5F08A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F34F9DD6-FA3E-4C11-BA48-E431B8E5F08A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F34F9DD6-FA3E-4C11-BA48-E431B8E5F08A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F34F9DD6-FA3E-4C11-BA48-E431B8E5F08A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

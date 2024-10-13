@@ -1,0 +1,72 @@
+﻿@model IEnumerable<GetEmployeeResponse>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Employee Management</h2>
+    <br />
+    <button type="button" id="myModel" class="btn btn-primary text-left">Add Employee</button>
+    <br /><br />
+    <table class="table table-bordered table-hover text-center" id="mytable">
+        <thead>
+            <tr>
+                <th class="text-center">Id</th>
+                <th class="text-center">FirstName</th>
+                <th class="text-center">LastName</th>
+                <th class="text-center">departmentName</th>
+                <th class="text-center">DepartmentId</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody class="tbody">
+        </tbody>
+        <tfoot>
+        </tfoot>
+    </table>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+               <h4 class="modal-title" id="modalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="formOrder" name="formOrder" autocomplete="off">
+                    <fieldset>
+                        <div class="col-md-6">
+                            <div class="form-group" hidden>
+                                <label for="Id">Id</label>
+                                <input type="text" class="form-control" id="Id" placeholder="Id" disabled="disabled" />
+                            </div>
+                            <div class="form-group">
+                                <label for="FirstName">FirstName</label>
+                                <input type="text" class="form-control" id="FirstName" name="FirstName" placeholder="firstname" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="FirstName">LastName</label>
+                                <input type="text" class="form-control" id="LastName" name="LastName" placeholder="lastname" required />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="DepartmentName">DepartmentName</label>
+                                <select class="form-control" id="DepartmentName" name="DepartmentName" required>
+                                    <option value="">-- Select Department --</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="btnAdd" onclick="AddEmployee();">Save</button>
+                <button type="button" class="btn btn-primary" id="btnUpdate" style="display:none;" onclick="UpdateEmployee();">Update</button>
+                <button type="button" class="btn btn-default" onclick="CloseModel();">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
