@@ -4,6 +4,7 @@ using Project_G2.BuissnessAccessLayer.Services;
 using Project_G2.DataAccessLayer.Repository.IRepository;
 using Project_G2.DataAccessLayer.Repository;
 using Microsoft.Net.Http.Headers;
+using UMS.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddTransient<DapperDBContext>();
+builder.Services.AddSingleton<PayloadEncryptDecryptService>();
 builder.Services.AddSingleton<IEmployeeService, EmployeeService>();
 builder.Services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
 
@@ -37,6 +39,14 @@ app.UseCors(policy =>
 });
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+
+app.UseMiddleware<SecurePayload>();
+
+//app.UseMiddleware<PayloadSecurity1>();
+
+//app.UseMiddleware<PayloadSecurity>();
 
 app.UseAuthorization();
 
