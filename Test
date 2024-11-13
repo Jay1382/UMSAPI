@@ -1,1 +1,116 @@
 
+  "AWS": {
+    "bucketName": "filestream-storage",
+    "AccessKeyId": "AKIAY6Z32QUJ5PIQEV7N",
+    "SecretAccessKey": "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"
+  },
+
+
+  public async Task<string> CheckS3Folder(dynamic file, string fileName, string dbName)
+  {
+      var data = await GetS3Folder(dbName);
+      dynamic result;
+      if (data == true)
+      {
+          result = await UploadFileToS3(file, fileName, dbName);
+      }
+      else
+      {
+          result = await CreateS3Folder(dbName);
+          var res = await UploadFileToS3(file, fileName, dbName);
+      }
+      //await GetPresignedUrl(fileName, dbName);
+      return result;
+  }
+
+  public async Task<dynamic> UploadFileToS3(dynamic file, string fileName, string dbName)
+  {
+      var client = new AmazonS3Client(_configuration.GetSection("AWS")["AccessKeyId"], _configuration.GetSection("AWS")["SecretAccessKey"], RegionEndpoint.EUNorth1);
+      Stream stream = file.OpenReadStream();
+      string filePath = $"{dbName}/{fileName}";
+      //dynamic uploadRequest = new TransferUtilityUploadRequest
+      //{
+      //    BucketName = _configuration.GetSection("AWS")["bucketName"],
+      //    Key = filePath,
+      //    InputStream = stream,
+      //    ContentType = file.ContentType
+      //};
+      //var fileTransferUtility = new TransferUtility(client);
+      //await fileTransferUtility.UploadAsync(uploadRequest);
+      //return uploadRequest.Key;
+      var uploadRequest = new PutObjectRequest
+      {
+          BucketName = _configuration.GetSection("AWS")["bucketName"],
+          Key = filePath,
+          InputStream = stream,
+          ContentType = file.ContentType
+      };
+      await client.PutObjectAsync(uploadRequest);
+      return uploadRequest.Key;
+  }
+
+  public async Task<dynamic> GetS3Folder(string dbName)
+  {
+      try
+      {
+          dynamic result;
+          var client = new AmazonS3Client(_configuration.GetSection("AWS")["AccessKeyId"], _configuration.GetSection("AWS")["SecretAccessKey"], RegionEndpoint.EUNorth1);
+          var request = new ListObjectsV2Request
+          {
+              BucketName = _configuration.GetSection("AWS")["bucketName"],
+              Delimiter = dbName
+          };
+          var response = await client.ListObjectsV2Async(request);
+          //var folders = response.CommonPrefixes?.Select(p => p.EnsurePrefix(dbName)).ToList();
+          var folders = response.CommonPrefixes?.Select(p => p.Contains(dbName)).ToList();
+          if (folders.Count() > 0)
+          {
+              result = true;
+          }
+          else
+          {
+              result = false;
+          }
+          return result;
+      }
+      catch (AmazonS3Exception ex)
+      {
+          throw new AmazonS3Exception(ex);
+      }
+  }
+
+  public async Task<dynamic> CreateS3Folder(string dbName)
+  {
+      try
+      {
+          var client = new AmazonS3Client(_configuration.GetSection("AWS")["AccessKeyId"], _configuration.GetSection("AWS")["SecretAccessKey"], RegionEndpoint.EUNorth1);
+          var folderKey = dbName.EndsWith("/") ? dbName : dbName + "/";
+
+          var request = new PutObjectRequest
+          {
+              BucketName = _configuration.GetSection("AWS")["bucketName"],
+              Key = folderKey,
+              InputStream = new MemoryStream(Array.Empty<byte>())
+          };
+          var result = await client.PutObjectAsync(request);
+          return "Folder created successfully.";
+      }
+      catch (AmazonS3Exception ex)
+      {
+          throw new AmazonS3Exception(ex);
+      }
+  }
+
+  public async Task<dynamic> DownloadFilesFromAWS(string fileId, string dbName)
+  {
+      var client = new AmazonS3Client(_configuration.GetSection("AWS")["AccessKeyId"], _configuration.GetSection("AWS")["SecretAccessKey"], RegionEndpoint.EUNorth1);
+      string filePath = $"{dbName}/{fileId}";
+      var getObjectRequest = new GetObjectRequest
+      {
+          BucketName = _configuration.GetSection("AWS")["bucketName"],
+          Key = filePath
+      };
+      var s3Object = await client.GetObjectAsync(getObjectRequest);
+      return s3Object.ResponseStream;
+  }
+
